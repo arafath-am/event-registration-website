@@ -1,0 +1,38 @@
+services:
+  eventhub:
+    build: .
+    container_name: eventhub-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: eventhub
+      MYSQL_USER: eventhub_user
+      MYSQL_PASSWORD: eventhub_password
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql:8.4
+    container_name: eventhub-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: eventhub
+      MYSQL_USER: eventhub_user
+      MYSQL_PASSWORD: eventhub_password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  mysql-data:
