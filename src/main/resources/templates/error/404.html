@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Not Found | EventHub</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<main class="auth-page">
+    <section class="auth-card">
+        <h1>404</h1>
+        <p th:text="${message}">Resource not found.</p>
+        <a th:href="@{/events}" class="btn full">Browse Events</a>
+    </section>
+</main>
+</body>
+</html>
