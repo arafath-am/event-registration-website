@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${event.title} + ' | EventHub'">Event Details</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+<main class="container">
+    <div th:replace="~{fragments/alerts :: alerts}"></div>
+
+    <section class="detail-layout">
+        <div>
+            <div class="detail-image" th:style="|background-image: url('${event.imageUrl}')|"></div>
+            <span class="pill" th:text="${event.category}">Category</span>
+            <h1 th:text="${event.title}">Event title</h1>
+            <p class="detail-description" th:text="${event.description}">Description</p>
+        </div>
+
+        <aside class="side-panel">
+            <h2>Event Info</h2>
+            <div class="info-row"><span>Date</span><strong th:text="${#temporals.format(event.eventDate, 'MMM dd, yyyy h:mm a')}">Date</strong></div>
+            <div class="info-row"><span>Location</span><strong th:text="${event.location}">Location</strong></div>
+            <div class="info-row"><span>Capacity</span><strong th:text="${event.capacity}">100</strong></div>
+            <div class="info-row"><span>Registered</span><strong th:text="${registeredCount}">0</strong></div>
+            <div class="info-row"><span>Available Seats</span><strong th:text="${availableSeats}">0</strong></div>
+            <div class="info-row"><span>Deadline</span><strong th:text="${#temporals.format(event.registrationDeadline, 'MMM dd, yyyy h:mm a')}">Deadline</strong></div>
+
+            <form sec:authorize="isAuthenticated()" th:action="@{/events/{id}/register(id=${event.id})}" method="post">
+                <button type="submit" class="btn full" th:disabled="${!event.registrationOpen}">
+                    Register Now
+                </button>
+            </form>
+            <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="btn full">Login to Register</a>
+            <p class="muted" th:if="${!event.registrationOpen}">Registration is currently closed.</p>
+        </aside>
+    </section>
+</main>
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>
