@@ -2,7 +2,6 @@
 
 EventHub is a full-stack Java Spring Boot web application for creating events, browsing upcoming events, registering attendees, managing capacity, and reviewing registrations through an admin dashboard.
 
-This project is intentionally built like a solid Computer Science graduate portfolio project: clean package structure, MVC architecture, authentication, role-based access, database persistence, validation, service-layer business logic, API endpoints, tests, Docker support, and documentation. In other words, not another tragic `TodoController.java` wearing a graduation cap.
 
 ## Features
 
@@ -163,11 +162,6 @@ event-registration-website/
 - Registration uniqueness is enforced by both service logic and a database unique constraint.
 - The project includes practical docs so GitHub visitors understand architecture, not just screenshots and hope.
 
-## Suggested GitHub Repository Name
-
-```text
-event-registration-website
-```
 
 ## Future Improvements
 
